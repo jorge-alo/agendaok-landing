@@ -1,0 +1,182 @@
+/* src/components/Pricing/Pricing.module.css */
+
+.pricing {
+  padding: 6rem 1.5rem;
+  background-color: var(--color-bg);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--color-text-light);
+  max-width: 500px;
+}
+
+.cardWrapper {
+  width: 100%;
+  max-width: 550px;
+  perspective: 1000px; /* Para dar profundidad al hover */
+}
+
+.card {
+  background-color: var(--color-bg);
+  border: 2px solid var(--color-primary); /* Borde azul destacado */
+  border-radius: 24px;
+  padding: 3rem 2.5rem;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Efecto de elevación al pasar el mouse */
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px -15px rgba(37, 99, 235, 0.25);
+}
+
+/* Badge superior flotante */
+.badge {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-primary);
+  color: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.priceContainer {
+  display: flex;
+  align-items: baseline;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.currency {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-light);
+  margin-right: 0.25rem;
+}
+
+.amount {
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: var(--color-text);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.period {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  margin-left: 0.5rem;
+}
+
+.description {
+  color: var(--color-text-light);
+  margin-bottom: 2.5rem;
+  font-size: 1rem;
+}
+
+.featuresList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 3rem 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.05rem;
+  color: var(--color-text);
+}
+
+.checkIcon {
+  width: 24px;
+  height: 24px;
+  background-color: rgba(34, 197, 94, 0.1); /* Verde suave */
+  color: #16A34A; /* Verde oscuro */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* Evita que el círculo se aplaste */
+}
+
+.ctaContainer {
+  width: 100%;
+}
+
+.ctaButton {
+  display: block;
+  width: 100%;
+  background-color: var(--color-primary);
+  color: white;
+  padding: 1.1rem 0;
+  border-radius: 12px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+
+.ctaButton:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+}
+
+.ctaNote {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+}
+
+/* Ajustes móviles */
+@media (max-width: 768px) {
+  .card {
+    padding: 2.5rem 1.5rem;
+  }
+  .amount {
+    font-size: 3.5rem;
+  }
+}

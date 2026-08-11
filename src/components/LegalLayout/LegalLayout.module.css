@@ -1,0 +1,67 @@
+/* src/components/LegalLayout/LegalLayout.module.css */
+
+.legalPage {
+  padding: 6rem 1.5rem;
+  background-color: var(--color-bg);
+  min-height: 70vh; /* Asegura que ocupe buena parte de la pantalla */
+}
+
+.container {
+  max-width: 800px; /* Ancho de lectura óptimo para textos largos */
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.updated {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+}
+
+/* Estilos para el texto legal (Prosa) */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  color: var(--color-text);
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-top: 1rem;
+  margin-bottom: -0.5rem;
+}
+
+.content p {
+  color: var(--color-text-light);
+}
+
+.content ul {
+  padding-left: 1.5rem;
+  color: var(--color-text-light);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.content a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  font-weight: 500;
+}

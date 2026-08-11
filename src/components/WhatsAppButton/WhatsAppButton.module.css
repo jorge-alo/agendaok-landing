@@ -1,0 +1,38 @@
+/* src/components/WhatsAppButton/WhatsAppButton.module.css */
+
+.whatsappButton {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366; /* Verde WhatsApp oficial */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+  transition: all 0.3s ease;
+}
+
+.whatsappButton:hover {
+  transform: scale(1.1) translateY(-4px);
+  box-shadow: 0 12px 32px rgba(37, 211, 102, 0.5);
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+}
+
+/* Animación de entrada sutil */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.whatsappButton {
+  animation: fadeIn 0.5s ease-out 1s both; /* Aparece 1 segundo después de cargar */
+}

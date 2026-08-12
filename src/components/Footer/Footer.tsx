@@ -23,9 +23,9 @@ export default function Footer() {
           <div className={styles.linkColumn}>
             <h4 className={styles.columnTitle}>Producto</h4>
             <ul>
-              <li><a href="#features">Beneficios</a></li>
-              <li><a href="#pricing">Precios</a></li>
-              <li><a href="#faq">Preguntas Frecuentes</a></li>
+              <li><a href="/#features">Beneficios</a></li>
+              <li><a href="/#pricing">Precios</a></li>
+              <li><a href="/#faq">Preguntas Frecuentes</a></li>
             </ul>
           </div>
 

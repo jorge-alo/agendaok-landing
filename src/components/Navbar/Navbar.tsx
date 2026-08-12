@@ -12,9 +12,9 @@ export default function Navbar() {
         </Link>
         
         <ul className={styles.navLinks}>
-          <li><a href="#features">Beneficios</a></li>
-          <li><a href="#pricing">Precio</a></li>
-          <li><a href="#faq">Preguntas</a></li>
+          <li><a href="/#features">Beneficios</a></li>
+          <li><a href="/#pricing">Precio</a></li>
+          <li><a href="/#faq">Preguntas</a></li>
           <li>
             <a href="#contact" className={styles.ctaButton}>
               Probar Gratis

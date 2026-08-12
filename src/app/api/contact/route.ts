@@ -2,11 +2,17 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { z } from 'zod';
+import { Ratelimit } from '@upstash/ratelimit';
+import { Redis } from '@upstash/redis';
 
-// Inicializamos Resend con la API Key que estará en las variables de entorno
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Definimos el esquema de validación con Zod
+// 🚦 Rate Limiting: máximo 5 envíos por hora por IP
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(5, '1 h'),
+});
+
 const contactSchema = z.object({
   name: z.string().min(2, 'El nombre debe tener al menos 2 letras'),
   email: z.string().email('El formato del email no es válido'),
@@ -17,18 +23,34 @@ const contactSchema = z.object({
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    
+
+    // 🍯 CAPA 1: HONEYPOT
+    // Los bots rellenan todos los campos, incluido este que está oculto.
+    // Los humanos nunca lo ven ni lo completan.
+    if (body.website) {
+      // Devolvemos "éxito" falso para que el bot no sepa que fue detectado
+      return NextResponse.json({ success: true, message: 'Mensaje enviado correctamente' });
+    }
+
+    // 🚦 CAPA 2: RATE LIMITING POR IP
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0] ?? 'unknown';
+    const { success: rateLimitOk } = await ratelimit.limit(ip);
+
+    if (!rateLimitOk) {
+      return NextResponse.json(
+        { success: false, message: 'Demasiados envíos. Por favor, intentá de nuevo en una hora.' },
+        { status: 429 }
+      );
+    }
+
     // 1. Validar los datos entrantes
     const validatedData = contactSchema.parse(body);
-    
+
     // 2. Enviar el correo usando Resend
     await resend.emails.send({
-      from: 'AgendaOK Landing <contacto@morfis.com.ar>', 
-      // ⚠️ IMPORTANTE: Cambiar 'onboarding@resend.dev' por 'hola@agendaok.com.ar'
-      // una vez que configures el dominio en Resend (Fase 2 del roadmap).
-      
-      to: ['alojorge13@gmail.com'],
-      replyTo: validatedData.email, // Para que al darle "Responder" llegue al cliente
+      from: 'AgendaOK Landing <contacto@morfis.com.ar>',
+      to: ['hola@agendaok.com.ar'],
+      replyTo: validatedData.email,
       subject: `🚀 Nuevo contacto de ${validatedData.name} - AgendaOK`,
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #E5E7EB; border-radius: 8px; padding: 24px;">
@@ -45,14 +67,22 @@ export async function POST(request: Request) {
         </div>
       `,
     });
-    
+
     return NextResponse.json({ success: true, message: 'Mensaje enviado correctamente' });
-    
+
   } catch (error) {
+    // Error de validación de Zod
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { success: false, message: 'Datos inválidos. Revisá los campos del formulario.' },
+        { status: 400 }
+      );
+    }
+
     console.error('Error al procesar el formulario:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Hubo un error al enviar el mensaje. Por favor, intenta de nuevo.' 
-    }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: 'Hubo un error al enviar el mensaje. Por favor, intenta de nuevo.' },
+      { status: 500 }
+    );
   }
 }

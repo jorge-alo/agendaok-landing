@@ -12,7 +12,10 @@ export default function Contact() {
     email: '',
     phone: '',
     message: '',
+    website: '',
   });
+
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Estado para manejar la carga y los mensajes de éxito/error
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -35,14 +38,22 @@ export default function Contact() {
 
       const result = await response.json();
 
+      if (!response.ok) {
+        setStatus('error');
+        setErrorMessage(result.message || 'Hubo un error al enviar el mensaje.');
+        return;
+      }
+
       if (result.success) {
         setStatus('success');
-        setFormData({ name: '', email: '', phone: '', message: '' }); // Limpiar formulario
+        setFormData({ name: '', email: '', phone: '', message: '', website: '' }); // Limpiar formulario
       } else {
         setStatus('error');
+        setErrorMessage(result.message);
       }
     } catch (error) {
       setStatus('error');
+      setErrorMessage('Error de conexión. Revisá tu internet e intentá de nuevo.');
     }
   };
 
@@ -127,9 +138,22 @@ export default function Contact() {
 
                 {status === 'error' && (
                   <p className={styles.errorMessage}>
-                    Hubo un error al enviar el mensaje. Por favor, intenta de nuevo.
+                    {errorMessage}
                   </p>
                 )}
+
+                <div className={styles.honeypot} aria-hidden="true">
+                  <label htmlFor="website">Website</label>
+                  <input
+                    type="text"
+                    id="website"
+                    name="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
 
                 <button type="submit" className={styles.submitButton} disabled={status === 'loading'}>
                   {status === 'loading' ? (

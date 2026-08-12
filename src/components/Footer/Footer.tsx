@@ -44,13 +44,9 @@ export default function Footer() {
             <ul>
               <li>
                 {/* Link externo a tu otra app */}
-                <a href="https://app.agendaok.com.ar" target="_blank" rel="noopener noreferrer">
+                <a href="https://app.agendaok.com.ar/login" target="_blank" rel="noopener noreferrer">
                   Iniciar Sesión
                 </a>
-              </li>
-              <li>
-                {/* Link nativo de email */}
-                <a href="mailto:hola@agendaok.com.ar">hola@agendaok.com.ar</a>
               </li>
             </ul>
           </div>

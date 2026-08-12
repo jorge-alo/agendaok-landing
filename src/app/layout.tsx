@@ -30,14 +30,21 @@ export const metadata: Metadata = {
     siteName: "AgendaOK",
     locale: "es_AR",
     type: "website",
-    // Cuando tengas una imagen de portada, descomenta esto:
-    // images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+      images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "AgendaOK - Sistema de turnos online para negocios",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "AgendaOK | Tu negocio con turnos online en 5 minutos",
     description:
       "Reservas 24/7, cobro de señas automático y recordatorios por WhatsApp.",
+      images: ["/og-image.png"],
   },
   robots: {
     index: true,

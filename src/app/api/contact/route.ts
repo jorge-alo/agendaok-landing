@@ -25,16 +25,27 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     // 🍯 CAPA 1: HONEYPOT
-    // Los bots rellenan todos los campos, incluido este que está oculto.
-    // Los humanos nunca lo ven ni lo completan.
     if (body.website) {
-      // Devolvemos "éxito" falso para que el bot no sepa que fue detectado
       return NextResponse.json({ success: true, message: 'Mensaje enviado correctamente' });
     }
 
-    // 🚦 CAPA 2: RATE LIMITING POR IP
+    // ⏱️ CAPA 2: CHEQUEO DE TIEMPO (bots envían en milisegundos)
+    if (body.loadedAt && Date.now() - body.loadedAt < 3000) {
+      return NextResponse.json({ success: true, message: 'Mensaje enviado correctamente' });
+    }
+
+    // 🚦 CAPA 3: RATE LIMITING POR IP (con fail-open)
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0] ?? 'unknown';
-    const { success: rateLimitOk } = await ratelimit.limit(ip);
+    
+    let rateLimitOk = true;
+    try {
+      const { success } = await ratelimit.limit(ip);
+      rateLimitOk = success;
+    } catch (redisError) {
+      // Si Upstash se cae, NO bloqueamos al usuario real
+      console.error('Rate limit no disponible, permitiendo envío:', redisError);
+      rateLimitOk = true;
+    }
 
     if (!rateLimitOk) {
       return NextResponse.json(
@@ -71,7 +82,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, message: 'Mensaje enviado correctamente' });
 
   } catch (error) {
-    // Error de validación de Zod
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { success: false, message: 'Datos inválidos. Revisá los campos del formulario.' },

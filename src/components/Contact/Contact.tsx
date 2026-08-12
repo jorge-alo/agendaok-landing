@@ -15,12 +15,12 @@ export default function Contact() {
     website: '',
   });
 
-  const [errorMessage, setErrorMessage] = useState('');
+  // ⏱️ Timestamp de cuando se cargó el formulario
+  const [loadedAt] = useState<number>(() => Date.now());
 
-  // Estado para manejar la carga y los mensajes de éxito/error
+  const [errorMessage, setErrorMessage] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  // Actualiza el estado cuando el usuario escribe
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -33,7 +33,8 @@ export default function Contact() {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        // 👇 Incluimos loadedAt en el payload
+        body: JSON.stringify({ ...formData, loadedAt }),
       });
 
       const result = await response.json();
@@ -46,7 +47,7 @@ export default function Contact() {
 
       if (result.success) {
         setStatus('success');
-        setFormData({ name: '', email: '', phone: '', message: '', website: '' }); // Limpiar formulario
+        setFormData({ name: '', email: '', phone: '', message: '', website: '' });
       } else {
         setStatus('error');
         setErrorMessage(result.message);
@@ -56,6 +57,8 @@ export default function Contact() {
       setErrorMessage('Error de conexión. Revisá tu internet e intentá de nuevo.');
     }
   };
+
+  // ... el resto del JSX queda igual (no cambies nada más)
 
   return (
     <section id="contact" className={styles.contact}>

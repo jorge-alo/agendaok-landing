@@ -16,6 +16,7 @@
 }
 
 .title {
+   font-family: var(--font-serif);
   font-size: 3rem;
   font-weight: 800;
   line-height: 1.2;
@@ -43,25 +44,25 @@
 
 /* Botón Primario (Sólido) */
 .btnPrimary {
-  background-color: var(--color-primary);
-  color: white;
+  background-color: var(--color-dark);
+  color: var(--color-primary-light);
   padding: 0.875rem 2rem;
   border-radius: 8px;
   font-weight: 600;
   font-size: 1.1rem;
   transition: transform 0.2s ease, background-color 0.2s ease;
-  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 4px 6px -1px rgba(201, 169, 110, 0.25);
 }
 
 .btnPrimary:hover {
-  background-color: var(--color-primary-hover);
+  background-color: var(--color-dark-soft);
   transform: translateY(-2px);
 }
 
 /* Botón Secundario (Outline) */
 .btnSecondary {
   background-color: transparent;
-  color: var(--color-primary);
+  color: var(--color-dark);
   padding: 0.875rem 2rem;
   border-radius: 8px;
   font-weight: 600;
@@ -72,7 +73,7 @@
 
 .btnSecondary:hover {
   border-color: var(--color-primary);
-  background-color: rgba(37, 99, 235, 0.05);
+  background-color: var(--color-primary-light);
 }
 
 /* ============================================
@@ -155,7 +156,7 @@
 .mobileMockup {
   width: 200px;
   height: 400px;
-  background-color: #1F2937;
+  background-color: #2C2C2C;
   border-radius: 28px;
   padding: 8px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);

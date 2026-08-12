@@ -1,20 +1,28 @@
 /* src/app/globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap');
 
 :root {
-  /* Paleta de Colores AgendaOK */
-  --color-primary: #2563EB;
-  --color-primary-hover: #1D4ED8; /* Un azul un tono más oscuro para hovers */
-  --color-bg: #FFFFFF;
-  --color-bg-soft: #F9FAFB;
-  --color-text: #111827; /* Gris muy oscuro para máxima legibilidad */
-  --color-text-light: #6B7280;
-  --color-border: #E5E7EB;
+  /* Paleta AgendaOK — misma identidad que el SaaS */
+  --color-primary: #C9A96E;
+  --color-primary-hover: #B69355;
+  --color-primary-light: #FDF8EE;
+  --color-primary-soft: #F5F0E8;
+
+  --color-dark: #1C1C1C;
+  --color-dark-soft: #2C2C2C;
+
+  --color-bg: #FAFAF7;
+  --color-bg-soft: #F5F0E8;
+
+  --color-text: #1A1A1A;
+  --color-text-light: #888888;
+  --color-border: #E8E3D8;
 
   /* Tipografía */
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
 }
 
-/* Reset Básico */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -22,7 +30,7 @@
 }
 
 html {
-  scroll-behavior: smooth; /* Para que los links internos (#features, #pricing) hagan scroll suave */
+  scroll-behavior: smooth;
 }
 
 body {

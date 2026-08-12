@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import styles from './Faq.module.css';
+import FadeIn from '../FadeIn/FadeIn';
 
 const faqs = [
   {
@@ -39,38 +40,42 @@ export default function FAQ() {
   return (
     <section id="faq" className={styles.faq}>
       <div className={styles.container}>
-        <div className={styles.header}>
-          <h2 className={styles.title}>Preguntas Frecuentes</h2>
-          <p className={styles.subtitle}>
-            Todo lo que necesitas saber antes de empezar. Si tienes otra duda, escribinos por WhatsApp.
-          </p>
-        </div>
+        <FadeIn>
+          <div className={styles.header}>
+            <h2 className={styles.title}>Preguntas Frecuentes</h2>
+            <p className={styles.subtitle}>
+              Todo lo que necesitas saber antes de empezar. Si tienes otra duda, escribinos por WhatsApp.
+            </p>
+          </div>
+        </FadeIn>
 
         <div className={styles.accordion}>
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
-            
-            return (
-              <div key={index} className={`${styles.item} ${isOpen ? styles.itemOpen : ''}`}>
-                {/* Botón de la pregunta */}
-                <button 
-                  className={styles.questionButton}
-                  onClick={() => toggleAccordion(index)}
-                  aria-expanded={isOpen}
-                >
-                  <span className={styles.questionText}>{faq.question}</span>
-                  <div className={styles.iconWrapper}>
-                    <ChevronDown size={20} />
-                  </div>
-                </button>
 
-                {/* Contenido desplegable */}
-                <div className={`${styles.answer} ${isOpen ? styles.answerOpen : ''}`}>
-                  <div className={styles.answerInner}>
-                    <p className={styles.answerText}>{faq.answer}</p>
+            return (
+              <FadeIn key={index} delay={index * 0.1}>
+                <div key={index} className={`${styles.item} ${isOpen ? styles.itemOpen : ''}`}>
+                  {/* Botón de la pregunta */}
+                  <button
+                    className={styles.questionButton}
+                    onClick={() => toggleAccordion(index)}
+                    aria-expanded={isOpen}
+                  >
+                    <span className={styles.questionText}>{faq.question}</span>
+                    <div className={styles.iconWrapper}>
+                      <ChevronDown size={20} />
+                    </div>
+                  </button>
+
+                  {/* Contenido desplegable */}
+                  <div className={`${styles.answer} ${isOpen ? styles.answerOpen : ''}`}>
+                    <div className={styles.answerInner}>
+                      <p className={styles.answerText}>{faq.answer}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </FadeIn>
             );
           })}
         </div>

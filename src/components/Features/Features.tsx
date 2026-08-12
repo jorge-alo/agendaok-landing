@@ -1,13 +1,14 @@
 // src/components/Features/Features.tsx
-import { 
-  CalendarCheck, 
-  MessageCircle, 
-  CreditCard, 
-  Users, 
-  BarChart3, 
-  Link2 
+import {
+  CalendarCheck,
+  MessageCircle,
+  CreditCard,
+  Users,
+  BarChart3,
+  Link2
 } from 'lucide-react';
 import styles from './Features.module.css';
+import FadeIn from '../FadeIn/FadeIn';
 
 // Definimos la data de forma centralizada
 const features = [
@@ -47,22 +48,25 @@ export default function Features() {
   return (
     <section id="features" className={styles.features}>
       <div className={styles.container}>
-        <div className={styles.header}>
-          <h2 className={styles.title}>Todo lo que necesitás para crecer</h2>
-          <p className={styles.subtitle}>
-            Dejá de usar papel, Excel y perder horas en el celular. AgendaOK automatiza tu negocio.
-          </p>
-        </div>
-
+        <FadeIn>
+          <div className={styles.header}>
+            <h2 className={styles.title}>Todo lo que necesitás para crecer</h2>
+            <p className={styles.subtitle}>
+              Dejá de usar papel, Excel y perder horas en el celular. AgendaOK automatiza tu negocio.
+            </p>
+          </div>
+        </FadeIn>
         <div className={styles.grid}>
-          {features.map((feature) => (
-            <div key={feature.title} className={styles.card}>
-              <div className={styles.iconWrapper}>
-                <feature.icon size={28} strokeWidth={2} />
+          {features.map((feature, index) => (
+            <FadeIn key={feature.title} delay={index * 0.1}>
+              <div key={feature.title} className={styles.card}>
+                <div className={styles.iconWrapper}>
+                  <feature.icon size={28} strokeWidth={2} />
+                </div>
+                <h3 className={styles.cardTitle}>{feature.title}</h3>
+                <p className={styles.cardDescription}>{feature.description}</p>
               </div>
-              <h3 className={styles.cardTitle}>{feature.title}</h3>
-              <p className={styles.cardDescription}>{feature.description}</p>
-            </div>
+            </FadeIn>
           ))}
         </div>
       </div>
